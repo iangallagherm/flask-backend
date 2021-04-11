@@ -76,7 +76,3 @@ def get_user(id):
         resp.status_code = 406
         return resp
 
-
-
-
-
