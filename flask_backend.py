@@ -42,14 +42,23 @@ users = {
 def get_users():
     if request.method == 'GET':
         search_username = request.args.get('name')
+        search_job = request.args.get('job')
+        user_search_list = users 
         if search_username:
-            return {'users_list' : 
+            user_search_list = {'users_list' : 
                        [
-                           user for user in users['users_list'] 
+                           user for user in user_search_list['users_list'] 
                            if user['name'] == search_username
                        ]
                    }
-        return users
+        if search_job:
+            user_search_list = {'users_list' : 
+                       [
+                           user for user in user_search_list['users_list'] 
+                           if user['job'] == search_job
+                       ]
+                   }
+        return user_search_list
     elif request.method == 'POST':
         userToAdd = request.get_json()
         users['users_list'].append(userToAdd)
