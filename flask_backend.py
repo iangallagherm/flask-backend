@@ -92,8 +92,9 @@ def get_user(id):
                 if user['id'] == id:
                     users['users_list'].remove(user)
                     resp = jsonify(success=True)
+                    resp.status_code = 204
                     return resp
         resp = jsonify(success=False)
-        resp.status_code = 406
+        resp.status_code = 404
         return resp
 
