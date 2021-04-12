@@ -3,6 +3,8 @@ from flask import request
 from flask import jsonify
 from flask_cors import CORS
 
+import random
+
 app = Flask(__name__)
 CORS(app)
 
@@ -41,6 +43,11 @@ users = {
     ]
 }
 
+def random_user_id():
+    chars = ''.join([chr(random.randint(97, 122)) for i in range(3)])
+    nums = ''.join([str(random.randint(0, 9)) for i in range(3)])
+    return chars + nums
+
 @app.route('/users', methods = ['GET', 'POST'])
 def get_users():
     if request.method == 'GET':
@@ -64,9 +71,11 @@ def get_users():
         return user_search_list
     elif request.method == 'POST':
         userToAdd = request.get_json()
+        userToAdd['id'] = random_user_id();
         users['users_list'].append(userToAdd)
         resp = jsonify(success=True)
         resp.status_code = 201
+        resp.data = userToAdd
         return resp
 
 @app.route('/users/<id>', methods = ['GET', 'DELETE'])
