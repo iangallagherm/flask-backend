@@ -73,9 +73,11 @@ def get_users():
         userToAdd = request.get_json()
         userToAdd['id'] = random_user_id();
         users['users_list'].append(userToAdd)
-        resp = jsonify(success=True)
+        resp = jsonify(
+            success = True,
+            data = userToAdd
+            )
         resp.status_code = 201
-        resp.data = userToAdd
         return resp
 
 @app.route('/users/<id>', methods = ['GET', 'DELETE'])
